@@ -1,0 +1,12 @@
+app:
+  port: 3000
+  corsEnabled: true
+  corsAllowedOrigins: <list of allowed origins>
+db:
+  postgres:
+    host: localhost
+    port: 5432
+    username: <username>
+    password: <password>
+    databaseName: worksat
+  synchronize: true

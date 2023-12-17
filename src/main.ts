@@ -1,9 +1,13 @@
 import { AppModule } from '@app/app.module';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+
+    const configService = app.get(ConfigService);
+    const port = configService.get<number>('app.port');
 
     const swaggerConfig = new DocumentBuilder()
         .setTitle('Worksat API')
@@ -13,6 +17,6 @@ async function bootstrap() {
     const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
     SwaggerModule.setup('api', app, swaggerDocument);
 
-    await app.listen(3000);
+    await app.listen(port);
 }
 bootstrap();
