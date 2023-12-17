@@ -1,0 +1,13 @@
+volumes:
+  db-volume:
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: worksat
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
