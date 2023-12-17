@@ -1,8 +1,9 @@
+import { ServiceStatus } from '@app/common/common.enums';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
-  }
+    getHealth(): string {
+        return ServiceStatus.LIVE;
+    }
 }
