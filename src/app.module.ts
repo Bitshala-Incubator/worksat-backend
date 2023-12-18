@@ -5,9 +5,15 @@ import { AuthenticationModule } from '@app/authentication/authentication.module'
 import configuration from '@app/configuration';
 import { AllExceptionsFilter } from '@app/filters/global-exception.filter';
 import { JobsModule } from '@app/jobs/jobs.module';
+import { RequestLoggerMiddleware } from '@app/middlewares/logger.middleware';
 import { OrganisationsModule } from '@app/organisation/organisations.module';
 import { UsersModule } from '@app/users/users.module';
-import { ClassSerializerInterceptor, Module } from '@nestjs/common';
+import {
+    ClassSerializerInterceptor,
+    MiddlewareConsumer,
+    Module,
+    NestModule,
+} from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -51,4 +57,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         AppService,
     ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+    configure(consumer: MiddlewareConsumer): void {
+        consumer.apply(RequestLoggerMiddleware).forRoutes('*');
+    }
+}
