@@ -8,6 +8,8 @@ import { JobsService } from '@app/jobs/jobs.service';
 import {
     Controller,
     Get,
+    Param,
+    ParseUUIDPipe,
     Query,
     UsePipes,
     ValidationPipe,
@@ -35,5 +37,15 @@ export class JobsController {
         @Query() query: ListJobsQueryDto,
     ): Promise<PaginatedDto<ListJobRecord>> {
         return this.jobsService.listJobs(query);
+    }
+
+    @ApiOperation({
+        description: 'Get job by id',
+    })
+    @Get(':id')
+    async getJobById(
+        @Param('id', ParseUUIDPipe) id: string,
+    ): Promise<ListJobRecord> {
+        return this.jobsService.getJobById(id);
     }
 }

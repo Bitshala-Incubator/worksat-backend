@@ -2,7 +2,7 @@ import { PaginatedDto } from '@app/common/common.validation-models';
 import { Job } from '@app/jobs/job.entity';
 import { ListJobsQueryDto } from '@app/jobs/jobs.request.dto';
 import { ListJobRecord } from '@app/jobs/jobs.response.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -50,6 +50,33 @@ export class JobsService {
                 }),
             ),
             totalRecords,
+        };
+    }
+
+    async getJobById(id: string): Promise<ListJobRecord> {
+        const record = await this.jobRepository.findOne({
+            where: { id },
+            relations: {
+                organization: true,
+            },
+        });
+
+        if (!record) throw new NotFoundException(`Job with id ${id} not found`);
+
+        return {
+            id: record.id,
+            title: record.title,
+            description: record.description,
+            requirements: record.requirements,
+            location: record.location,
+            type: record.type,
+            salary: record.salary,
+            postedDate: record.createdAt.toISOString(),
+            deadline: record.deadline.toISOString(),
+            status: record.status,
+            applicationInstructions: record.applicationInstructions,
+            organizationId: record.organization.id,
+            organizationName: record.organization.name,
         };
     }
 }
