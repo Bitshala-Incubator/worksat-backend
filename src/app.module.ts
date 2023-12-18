@@ -3,11 +3,13 @@ import { AppService } from '@app/app.service';
 import { ApplicationsModule } from '@app/applications/applications.module';
 import { AuthenticationModule } from '@app/authentication/authentication.module';
 import configuration from '@app/configuration';
+import { AllExceptionsFilter } from '@app/filters/global-exception.filter';
 import { JobsModule } from '@app/jobs/jobs.module';
 import { OrganisationsModule } from '@app/organisation/organisations.module';
 import { UsersModule } from '@app/users/users.module';
-import { Module } from '@nestjs/common';
+import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
@@ -37,6 +39,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         UsersModule,
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [
+        {
+            provide: APP_FILTER,
+            useClass: AllExceptionsFilter,
+        },
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: ClassSerializerInterceptor,
+        },
+        AppService,
+    ],
 })
 export class AppModule {}
