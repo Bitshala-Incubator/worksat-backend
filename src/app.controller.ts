@@ -1,4 +1,5 @@
 import { AppService } from '@app/app.service';
+import { Public } from '@app/authentication/public-route.decorator';
 import { Controller, Get } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -6,6 +7,7 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 export class AppController {
     constructor(private readonly appService: AppService) {}
 
+    @Public()
     @ApiTags('Service Health')
     @ApiOperation({
         description: 'Check health of app',

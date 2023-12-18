@@ -2,6 +2,7 @@ app:
   port: 3000
   corsEnabled: true
   corsAllowedOrigins: <list of allowed origins>
+  jwtSecret: <256 bit jwt secret>
 db:
   postgres:
     host: localhost

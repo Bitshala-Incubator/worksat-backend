@@ -1,6 +1,7 @@
 import { AppController } from '@app/app.controller';
 import { AppService } from '@app/app.service';
 import { ApplicationsModule } from '@app/applications/applications.module';
+import { AuthenticationModule } from '@app/authentication/authentication.module';
 import configuration from '@app/configuration';
 import { JobsModule } from '@app/jobs/jobs.module';
 import { OrganisationsModule } from '@app/organisation/organisations.module';
@@ -30,6 +31,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             }),
         }),
         ApplicationsModule,
+        AuthenticationModule,
         JobsModule,
         OrganisationsModule,
         UsersModule,

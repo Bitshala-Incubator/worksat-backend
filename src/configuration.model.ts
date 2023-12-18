@@ -25,6 +25,10 @@ class AppConfig {
     @IsNotEmpty({ each: true })
     @Type(() => String)
     corsAllowedOrigins: Array<string>;
+
+    @IsString()
+    @IsNotEmpty()
+    jwtSecret: string;
 }
 
 class PostgresConfig {
