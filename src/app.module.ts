@@ -1,6 +1,10 @@
 import { AppController } from '@app/app.controller';
 import { AppService } from '@app/app.service';
+import { ApplicationsModule } from '@app/applications/applications.module';
 import configuration from '@app/configuration';
+import { JobsModule } from '@app/jobs/jobs.module';
+import { OrganisationsModule } from '@app/organisation/organisations.module';
+import { UsersModule } from '@app/users/users.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -25,6 +29,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
                 autoLoadEntities: true,
             }),
         }),
+        ApplicationsModule,
+        JobsModule,
+        OrganisationsModule,
+        UsersModule,
     ],
     controllers: [AppController],
     providers: [AppService],
