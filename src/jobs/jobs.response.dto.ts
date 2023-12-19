@@ -1,5 +1,8 @@
+import { Roles, Skills } from '@app/common/common.enums';
 import { JobLocation, JobStatus, JobType } from '@app/jobs/jobs.enum';
 import {
+    ArrayUnique,
+    IsArray,
     IsDateString,
     IsEnum,
     IsNotEmpty,
@@ -42,6 +45,16 @@ export class ListJobRecord {
 
     @IsEnum(JobStatus)
     status: JobStatus;
+
+    @IsEnum(Skills, { each: true })
+    @IsArray()
+    @ArrayUnique()
+    skills: Skills[];
+
+    @IsEnum(Roles, { each: true })
+    @IsArray()
+    @ArrayUnique()
+    roles: Roles[];
 
     @IsString()
     @IsOptional()

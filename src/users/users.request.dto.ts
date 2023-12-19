@@ -1,6 +1,13 @@
-import { Gender } from '@app/common/common.enums';
+import { Gender, Roles, Skills } from '@app/common/common.enums';
 import { Availability } from '@app/users/users.enum';
-import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
+import {
+    ArrayUnique,
+    IsArray,
+    IsEmail,
+    IsEnum,
+    IsOptional,
+    IsString,
+} from 'class-validator';
 
 export class UpdateUserDetailsRequest {
     @IsString()
@@ -22,4 +29,16 @@ export class UpdateUserDetailsRequest {
     @IsEnum(Availability)
     @IsOptional()
     availability?: Availability;
+
+    @IsEnum(Skills, { each: true })
+    @IsOptional()
+    @IsArray()
+    @ArrayUnique()
+    skills?: Skills[];
+
+    @IsEnum(Roles, { each: true })
+    @IsOptional()
+    @IsArray()
+    @ArrayUnique()
+    roles?: Roles[];
 }

@@ -1,5 +1,5 @@
 import { Application } from '@app/applications/application.entity';
-import { Gender } from '@app/common/common.enums';
+import { Gender, Roles, Skills } from '@app/common/common.enums';
 import { Availability } from '@app/users/users.enum';
 import {
     BaseEntity,
@@ -32,6 +32,24 @@ export class User extends BaseEntity {
 
     @Column({ type: 'enum', enum: Availability, nullable: true })
     availability: Availability;
+
+    @Column({
+        type: 'enum',
+        enum: Skills,
+        array: true,
+        nullable: false,
+        default: [],
+    })
+    skills: Skills[];
+
+    @Column({
+        type: 'enum',
+        enum: Roles,
+        array: true,
+        nullable: false,
+        default: [],
+    })
+    roles: Roles[];
 
     @OneToMany(() => Application, (application) => application.user)
     applications: Relation<Application[]>;

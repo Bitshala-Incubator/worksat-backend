@@ -1,5 +1,6 @@
 import { Application } from '@app/applications/application.entity';
 import { BaseEntity } from '@app/common/common.entities';
+import { Roles, Skills } from '@app/common/common.enums';
 import { BigIntTransformer } from '@app/common/common.transformers';
 import { JobLocation, JobStatus, JobType } from '@app/jobs/jobs.enum';
 import { Organization } from '@app/organisation/organisation.entity';
@@ -56,6 +57,24 @@ export class Job extends BaseEntity {
 
     @Column({ type: 'text', nullable: true })
     applicationInstructions: string;
+
+    @Column({
+        type: 'enum',
+        enum: Skills,
+        array: true,
+        nullable: false,
+        default: [],
+    })
+    skills: Skills[];
+
+    @Column({
+        type: 'enum',
+        enum: Roles,
+        array: true,
+        nullable: false,
+        default: [],
+    })
+    roles: Roles[];
 
     @ManyToOne(() => Organization, (organization) => organization.jobs)
     organization: Relation<Organization>;

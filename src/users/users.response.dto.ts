@@ -1,6 +1,13 @@
-import { Gender } from '@app/common/common.enums';
+import { Gender, Roles, Skills } from '@app/common/common.enums';
 import { Availability } from '@app/users/users.enum';
-import { IsEmail, IsEnum, IsString, IsUUID } from 'class-validator';
+import {
+    ArrayUnique,
+    IsArray,
+    IsEmail,
+    IsEnum,
+    IsString,
+    IsUUID,
+} from 'class-validator';
 
 export class UserDetailsResponse {
     @IsUUID()
@@ -20,6 +27,16 @@ export class UserDetailsResponse {
 
     @IsEnum(Availability)
     availability: Availability;
+
+    @IsEnum(Skills, { each: true })
+    @IsArray()
+    @ArrayUnique()
+    skills: Skills[];
+
+    @IsEnum(Roles, { each: true })
+    @IsArray()
+    @ArrayUnique()
+    roles: Roles[];
 
     constructor(partial: Partial<UserDetailsResponse>) {
         Object.assign(this, partial);

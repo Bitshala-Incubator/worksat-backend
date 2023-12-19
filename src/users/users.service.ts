@@ -28,6 +28,8 @@ export class UsersService {
             emailAddress: user.emailAddress,
             gender: user.gender,
             availability: user.availability,
+            skills: user.skills,
+            roles: user.roles,
         };
     }
 
@@ -45,6 +47,8 @@ export class UsersService {
         user.emailAddress = dto.emailAddress || user.emailAddress;
         user.gender = dto.gender || user.gender;
         user.availability = dto.availability || user.availability;
+        user.skills = dto.skills || user.skills;
+        user.roles = dto.roles || user.roles;
 
         await this.userRepository.save(user);
 
@@ -55,6 +59,8 @@ export class UsersService {
             emailAddress: user.emailAddress,
             gender: user.gender,
             availability: user.availability,
+            skills: user.skills,
+            roles: user.roles,
         };
     }
 }
