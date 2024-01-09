@@ -11,6 +11,15 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
     const port = configService.get<number>('app.port');
 
+    if (configService.get<boolean>('app.corsEnabled')) {
+        const allowedOrigins = configService.get<string[]>(
+            'app.corsAllowedOrigins',
+        );
+        app.enableCors({
+            origin: allowedOrigins.includes('*') ? '*' : allowedOrigins,
+        });
+    }
+
     const swaggerConfig = new DocumentBuilder()
         .setTitle('Worksat API')
         .setDescription('Backend services for Worksats.')
